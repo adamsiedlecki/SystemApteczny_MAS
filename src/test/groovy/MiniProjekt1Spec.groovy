@@ -2,6 +2,7 @@ import net.asiedlecki.system.apteczny.Dokument
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.Recepta
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
+import net.asiedlecki.system.apteczny.SystemAptecznyMain
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -15,6 +16,13 @@ class MiniProjekt1Spec extends Specification {
 
         then:
         ProduktLeczniczy.pobierzProduktyLeczniczePrzetworzoneWApteceWOstatnimCzasie().size() == 2
+    }
+
+
+
+    def "powinien móc zapisać dane inicjalne"() {
+        expect:
+        SystemAptecznyMain.zapiszInicjalneProduktyLecznicze()
     }
 
     def "powinien mieć TRWAŁĄ ekstensję"() {

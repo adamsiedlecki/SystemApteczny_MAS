@@ -1,15 +1,32 @@
 package net.asiedlecki.system.apteczny;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.asiedlecki.system.apteczny.db.config.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class ProduktLeczniczy {
 
     private static final List<ProduktLeczniczy> REJESTR_PRODUKTOW_LECZNICZYCH = new ArrayList<>();
 
-    private final String gtin;
-    private final List<SubstancjaCzynna> substancjeCzynne;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String gtin;
+    @ManyToMany
+    private List<SubstancjaCzynna> substancjeCzynne;
 
     public ProduktLeczniczy(String gtin, List<SubstancjaCzynna> substancjeCzynne) {
         this.gtin = gtin;
@@ -30,6 +47,10 @@ public class ProduktLeczniczy {
     }
 
     public static List<ProduktLeczniczy> pobierzProduktyLeczniczePrzetworzoneWAptece() {
-        throw new UnsupportedOperationException("TODO");
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Query<ProduktLeczniczy> q = session.createQuery("From ProduktLeczniczy ", ProduktLeczniczy.class);
+            return q.getResultList();
+        }
     }
 }
