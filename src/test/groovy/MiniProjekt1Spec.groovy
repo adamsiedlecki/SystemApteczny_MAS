@@ -1,3 +1,4 @@
+import net.asiedlecki.system.apteczny.AptekaDao
 import net.asiedlecki.system.apteczny.Dokument
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.Recepta
@@ -18,16 +19,13 @@ class MiniProjekt1Spec extends Specification {
         ProduktLeczniczy.pobierzProduktyLeczniczePrzetworzoneWApteceWOstatnimCzasie().size() == 2
     }
 
-
-
-    def "powinien móc zapisać dane inicjalne"() {
-        expect:
-        SystemAptecznyMain.zapiszInicjalneProduktyLecznicze()
-    }
-
     def "powinien mieć TRWAŁĄ ekstensję"() {
-        expect:
-        ProduktLeczniczy.pobierzProduktyLeczniczePrzetworzoneWAptece().size() > 2
+        when:
+        def gtin = "zupelnieNieRandomowyGtin"
+        new ProduktLeczniczy(gtin, List.of())
+
+        then:
+        AptekaDao.pobierzProduktLeczniczyPoGtin(gtin) != null
     }
 
     def "powinien mieć atrybut złożony - recepta ma produkt leczniczy"() {

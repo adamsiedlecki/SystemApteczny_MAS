@@ -24,6 +24,7 @@ public class ProduktLeczniczy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String gtin;
     @ManyToMany
     private List<SubstancjaCzynna> substancjeCzynne;
@@ -31,10 +32,13 @@ public class ProduktLeczniczy {
     public ProduktLeczniczy(String gtin, List<SubstancjaCzynna> substancjeCzynne) {
         this.gtin = gtin;
         this.substancjeCzynne = substancjeCzynne;
-        if (gtin == null || REJESTR_PRODUKTOW_LECZNICZYCH.stream().anyMatch(p -> p.gtin.equals(gtin))) {
-            throw new IllegalArgumentException("Lek o podanym GTIN istnieje juz w rejestrze!");
+        if (gtin == null) {
+            throw new IllegalArgumentException("Lek omusi miec GTIN!");
         }
         REJESTR_PRODUKTOW_LECZNICZYCH.add(this);
+        if (AptekaDao.pobierzProduktLeczniczyPoGtin(gtin) == null) {
+            AptekaDao.zapiszProduktLeczniczy(this);
+        }
     }
 
     public boolean czyProduktNarkotyczny() {
@@ -46,11 +50,7 @@ public class ProduktLeczniczy {
         return Collections.unmodifiableList(REJESTR_PRODUKTOW_LECZNICZYCH);
     }
 
-    public static List<ProduktLeczniczy> pobierzProduktyLeczniczePrzetworzoneWAptece() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            Query<ProduktLeczniczy> q = session.createQuery("From ProduktLeczniczy ", ProduktLeczniczy.class);
-            return q.getResultList();
-        }
+    public static List<ProduktLeczniczy> pobierzProduktyLeczniczeWBazieDanychApteki() {
+        return AptekaDao.pobierzProduktyLeczniczeWBazieDanychApteki();
     }
 }
