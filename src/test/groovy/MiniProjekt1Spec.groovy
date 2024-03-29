@@ -48,7 +48,7 @@ class MiniProjekt1Spec extends Specification {
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy(UUID.randomUUID().toString(), List.of(substancjaCzynna1, substancjaCzynna2))
     }
 
-    def "powinien mieć atrybut klasowy - wszystkie recepty mają maksymalny czas kuracji"() {
+    def "powinien mieć atrybut klasowy - wszystkie recepty mają wspólny maksymalny czas kuracji"() {
         expect:
         Recepta.MAKSYMALNY_CZAS_KURACJI != null
     }
