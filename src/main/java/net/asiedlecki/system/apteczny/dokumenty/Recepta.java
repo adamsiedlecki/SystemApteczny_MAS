@@ -1,5 +1,6 @@
 package net.asiedlecki.system.apteczny.dokumenty;
 
+import lombok.Getter;
 import net.asiedlecki.system.apteczny.ProduktLeczniczy;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class Recepta extends Dokument {
 
     public static final Period MAKSYMALNY_CZAS_KURACJI = Period.ofDays(360);
 
+    @Getter
     private final ProduktLeczniczy produktLeczniczy;
     private final Optional<LocalDateTime> dataRealizacjiOd;
 

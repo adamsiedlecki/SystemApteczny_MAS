@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class ProduktLeczniczy {
 
     @Column(unique = true)
     private String gtin;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<SubstancjaCzynna> substancjeCzynne;
 
     public ProduktLeczniczy(String gtin, List<SubstancjaCzynna> substancjeCzynne) {
@@ -52,5 +53,14 @@ public class ProduktLeczniczy {
 
     public static List<ProduktLeczniczy> pobierzProduktyLeczniczeWBazieDanychApteki() {
         return AptekaDao.pobierzProduktyLeczniczeWBazieDanychApteki();
+    }
+
+    public String utworzOpis() {
+        return "gtin: " + gtin + ", substacje: " + substancjeCzynne.stream().map(s -> s.getNazwaPolska()).collect(Collectors.joining(", "));
+    }
+
+    @Override
+    public String toString() {
+        return utworzOpis();
     }
 }

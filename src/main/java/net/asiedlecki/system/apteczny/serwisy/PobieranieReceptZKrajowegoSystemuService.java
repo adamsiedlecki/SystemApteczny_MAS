@@ -18,7 +18,7 @@ public class PobieranieReceptZKrajowegoSystemuService {
      */
     public Recepta pobierz(String idDokumentuRecepty) {
         if (idDokumentuRecepty.equals("1")) {
-            return new Recepta(idDokumentuRecepty, new ProduktLeczniczy("gtin-" + idDokumentuRecepty, List.of(new SubstancjaCzynna("kofeina"))));
+            return new Recepta(idDokumentuRecepty, new ProduktLeczniczy(idDokumentuRecepty, List.of(new SubstancjaCzynna("kofeina"))));
         }
         return null;
     }
