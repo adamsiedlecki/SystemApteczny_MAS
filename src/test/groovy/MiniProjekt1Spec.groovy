@@ -1,9 +1,8 @@
 import net.asiedlecki.system.apteczny.AptekaDao
-import net.asiedlecki.system.apteczny.Dokument
+import net.asiedlecki.system.apteczny.dokumenty.Dokument
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
-import net.asiedlecki.system.apteczny.Recepta
+import net.asiedlecki.system.apteczny.dokumenty.Recepta
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
-import net.asiedlecki.system.apteczny.SystemAptecznyMain
 import spock.lang.Specification
 
 import java.time.LocalDateTime

@@ -1,6 +1,7 @@
-package net.asiedlecki.system.apteczny;
+package net.asiedlecki.system.apteczny.dokumenty;
 
-import java.time.Duration;
+import net.asiedlecki.system.apteczny.ProduktLeczniczy;
+
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Optional;

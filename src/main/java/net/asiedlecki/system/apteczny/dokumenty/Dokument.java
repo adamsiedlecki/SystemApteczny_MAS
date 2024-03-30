@@ -1,4 +1,4 @@
-package net.asiedlecki.system.apteczny;
+package net.asiedlecki.system.apteczny.dokumenty;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
