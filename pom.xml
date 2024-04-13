@@ -82,7 +82,7 @@
     </dependencies>
 
     <build>
-        <finalName>spock-example</finalName>
+        <finalName>apteka</finalName>
         <plugins>
             <!-- compiles Groovy code. -->
             <plugin>
