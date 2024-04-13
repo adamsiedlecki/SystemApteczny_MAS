@@ -68,14 +68,14 @@ class MiniProjekt1Spec extends Specification {
         ProduktLeczniczy.pobierzProduktyLeczniczePrzetworzoneWApteceWOstatnimCzasie().size() != 0
     }
 
-    def "powinien mieć przesłonięcie - przesłaniany jest konstruktor w recepcie, można ją utworzyć z datą jak i bez"() {
+    def "powinien mieć przeciążenie - przesłaniany jest konstruktor w recepcie, można ją utworzyć z datą jak i bez"() {
         expect:
         Recepta recepta1 = new Recepta("id", null)
 
         Recepta recepta2 = new Recepta("id", null, LocalDateTime.now())
     }
 
-    def "powinien mieć przeciążenie - opis dokumentów"() {
+    def "powinien mieć przesłonięcie - opis dokumentów"() {
         when:
         Dokument recepta = new Recepta("id", null)
         Dokument dokument = new Dokument("id")
