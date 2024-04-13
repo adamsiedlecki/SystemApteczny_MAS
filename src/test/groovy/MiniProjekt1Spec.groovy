@@ -61,14 +61,14 @@ class MiniProjekt1Spec extends Specification {
 
     //TODO atrybyt pochodny
 
-    def "powinien mieć metodę klasową - produkt leczniczy ma metodę do pobierania produktów przetworzonych w aptece"() { //TODO bardziej biznesowy typu lek po nazwie
+    def "powinien mieć metodę klasową - produkt leczniczy ma metodę do pobierania produktów przetworzonych w aptece"() {
         when:
         SubstancjaCzynna substancjaCzynna1 = new SubstancjaCzynna("mentol")
 
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy(UUID.randomUUID().toString(), List.of(substancjaCzynna1))
 
         then:
-        ProduktLeczniczy.pobierzProduktyLeczniczePrzetworzoneWApteceWOstatnimCzasie().size() != 0
+        ProduktLeczniczy.pobierzOstatnieProduktyLeczniczeZSubstancja("mentol").size() != 0
     }
 
     def "powinien mieć przeciążenie - przesłaniany jest konstruktor w recepcie, można ją utworzyć z datą jak i bez"() {

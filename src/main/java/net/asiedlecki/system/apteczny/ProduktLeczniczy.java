@@ -51,6 +51,14 @@ public class ProduktLeczniczy {
         return Collections.unmodifiableList(REJESTR_PRODUKTOW_LECZNICZYCH);
     }
 
+    public static List<ProduktLeczniczy> pobierzOstatnieProduktyLeczniczeZSubstancja(String nazwaPolskaSubstancjiCzynnej) {
+        List<ProduktLeczniczy> produktyZSubstancja = REJESTR_PRODUKTOW_LECZNICZYCH.stream()
+                .filter(pl -> pl.substancjeCzynne.stream()
+                        .anyMatch(subs -> subs.getNazwaPolska().equals(nazwaPolskaSubstancjiCzynnej)))
+                .toList();
+        return produktyZSubstancja;
+    }
+
     public static List<ProduktLeczniczy> pobierzProduktyLeczniczeWBazieDanychApteki() {
         return AptekaDao.pobierzProduktyLeczniczeWBazieDanychApteki();
     }
