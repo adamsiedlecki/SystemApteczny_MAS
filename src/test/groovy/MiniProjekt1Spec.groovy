@@ -31,15 +31,15 @@ class MiniProjekt1Spec extends Specification {
     def "powinien mieć atrybut złożony - recepta ma produkt leczniczy"() {
         expect:
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy("gtin", List.of())
-        Recepta recepta = new Recepta("id", produktLeczniczy)
+        Recepta recepta = new Recepta("id", produktLeczniczy,  LocalDateTime.now().plusDays(100))
     }
 
     def "powinien mieć atrybut opcjonalny - recepta ma datę wydania od"() {
         when:
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy(UUID.randomUUID().toString(), List.of())
         RealizacjaReceptyService realizacjaReceptyService = new RealizacjaReceptyService()
-        Recepta receptaBezDatyRealizacjiOd = new Recepta("id", produktLeczniczy)
-        Recepta receptaZDataRealizacjiOd = new Recepta("id", produktLeczniczy, LocalDateTime.of(2077, 1,1, 1, 1))
+        Recepta receptaBezDatyRealizacjiOd = new Recepta("id", produktLeczniczy,  LocalDateTime.now().plusDays(100))
+        Recepta receptaZDataRealizacjiOd = new Recepta("id", produktLeczniczy,  LocalDateTime.now().plusDays(100), LocalDateTime.of(2077, 1,1, 1, 1))
 
         then:
         !realizacjaReceptyService.zrealizuj(receptaZDataRealizacjiOd)
@@ -59,7 +59,13 @@ class MiniProjekt1Spec extends Specification {
         Recepta.MAKSYMALNY_CZAS_KURACJI != null
     }
 
-    //TODO atrybyt pochodny
+    def "powinien mieć atrybut pochodny"() {
+        when:
+        Recepta recepta1 = new Recepta("id", null, LocalDateTime.now().minusDays(1))
+
+        then:
+        recepta1.czyReceptaJestPrzeterminowana()
+     }
 
     def "powinien mieć metodę klasową - produkt leczniczy ma metodę do pobierania produktów przetworzonych w aptece"() {
         when:
@@ -73,14 +79,14 @@ class MiniProjekt1Spec extends Specification {
 
     def "powinien mieć przeciążenie - przesłaniany jest konstruktor w recepcie, można ją utworzyć z datą jak i bez"() {
         expect:
-        Recepta recepta1 = new Recepta("id", null)
+        Recepta recepta1 = new Recepta("id", null, LocalDateTime.now().plusDays(100))
 
-        Recepta recepta2 = new Recepta("id", null, LocalDateTime.now())
+        Recepta recepta2 = new Recepta("id", null,  LocalDateTime.now().plusDays(100), LocalDateTime.now())
     }
 
     def "powinien mieć przesłonięcie - opis dokumentów"() {
         when:
-        Dokument recepta = new Recepta("id", null)
+        Dokument recepta = new Recepta("id", null,  LocalDateTime.now().plusDays(100))
         Dokument dokument = new Dokument("id")
 
         then:

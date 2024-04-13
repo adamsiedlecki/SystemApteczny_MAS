@@ -14,19 +14,25 @@ public class Recepta extends Dokument {
     @Getter
     private final ProduktLeczniczy produktLeczniczy;
     private final LocalDateTime dataRealizacjiOd;
+    private final LocalDateTime dataRealizacjiDo;
 
-    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy, LocalDateTime dataRealizacjiOd) {
+    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy, LocalDateTime dataRealizacjiDo, LocalDateTime dataRealizacjiOd) {
         super(idDokumentu);
         this.produktLeczniczy = produktLeczniczy;
+        this.dataRealizacjiDo = dataRealizacjiDo;
         this.dataRealizacjiOd = dataRealizacjiOd;
     }
 
-    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy) {
-        this(idDokumentu, produktLeczniczy, null);
+    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy, LocalDateTime dataRealizacjiDo) {
+        this(idDokumentu, produktLeczniczy, dataRealizacjiDo, null);
     }
 
     public Optional<LocalDateTime> getDataRealizacjiOd() {
         return Optional.ofNullable(dataRealizacjiOd);
+    }
+
+    public boolean czyReceptaJestPrzeterminowana() {
+        return LocalDateTime.now().isAfter(dataRealizacjiDo);
     }
 
     @Override
