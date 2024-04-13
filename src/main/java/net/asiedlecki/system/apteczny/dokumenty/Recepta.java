@@ -25,7 +25,7 @@ public class Recepta extends Dokument {
         this(idDokumentu, produktLeczniczy, null);
     }
 
-    public Optional<LocalDateTime> getDataRealizacjiOd() { //TODO użycie w metodzie
+    public Optional<LocalDateTime> getDataRealizacjiOd() {
         return Optional.ofNullable(dataRealizacjiOd);
     }
 
