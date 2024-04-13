@@ -3,6 +3,7 @@ import net.asiedlecki.system.apteczny.dokumenty.Dokument
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.dokumenty.Recepta
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
+import net.asiedlecki.system.apteczny.serwisy.RealizacjaReceptyService
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -36,11 +37,13 @@ class MiniProjekt1Spec extends Specification {
     def "powinien mieć atrybut opcjonalny - recepta ma datę wydania od"() {
         when:
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy(UUID.randomUUID().toString(), List.of())
-        Recepta recepta = new Recepta("id", produktLeczniczy)
+        RealizacjaReceptyService realizacjaReceptyService = new RealizacjaReceptyService()
+        Recepta receptaBezDatyRealizacjiOd = new Recepta("id", produktLeczniczy)
+        Recepta receptaZDataRealizacjiOd = new Recepta("id", produktLeczniczy, LocalDateTime.of(2077, 1,1, 1, 1))
 
-        Optional<LocalDateTime> dataRealizacji = recepta.getDataRealizacjiOd()
         then:
-        dataRealizacji.isEmpty()
+        !realizacjaReceptyService.zrealizuj(receptaZDataRealizacjiOd)
+        realizacjaReceptyService.zrealizuj(receptaBezDatyRealizacjiOd)
     }
 
     def "powinien mieć atrybut powtarzalny - produkt leczniczy może mieć 2 substancje czynne"() {
