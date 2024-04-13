@@ -34,9 +34,13 @@ class MiniProjekt1Spec extends Specification {
     }
 
     def "powinien mieć atrybut opcjonalny - recepta ma datę wydania od"() {
-        expect:
+        when:
         ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy(UUID.randomUUID().toString(), List.of())
-        Recepta recepta = new Recepta("id", produktLeczniczy, Optional.empty())
+        Recepta recepta = new Recepta("id", produktLeczniczy)
+
+        Optional<LocalDateTime> dataRealizacji = recepta.getDataRealizacjiOd()
+        then:
+        dataRealizacji.isEmpty()
     }
 
     def "powinien mieć atrybut powtarzalny - produkt leczniczy może mieć 2 substancje czynne"() {
@@ -52,7 +56,9 @@ class MiniProjekt1Spec extends Specification {
         Recepta.MAKSYMALNY_CZAS_KURACJI != null
     }
 
-    def "powinien mieć metodę klasową - produkt leczniczy ma metodę do pobierania produktów przetworzonych w aptece"() {
+    //TODO atrybyt pochodny
+
+    def "powinien mieć metodę klasową - produkt leczniczy ma metodę do pobierania produktów przetworzonych w aptece"() { //TODO bardziej biznesowy typu lek po nazwie
         when:
         SubstancjaCzynna substancjaCzynna1 = new SubstancjaCzynna("mentol")
 
@@ -66,7 +72,7 @@ class MiniProjekt1Spec extends Specification {
         expect:
         Recepta recepta1 = new Recepta("id", null)
 
-        Recepta recepta2 = new Recepta("id", null, Optional.of(LocalDateTime.now()))
+        Recepta recepta2 = new Recepta("id", null, LocalDateTime.now())
     }
 
     def "powinien mieć przeciążenie - opis dokumentów"() {

@@ -13,16 +13,20 @@ public class Recepta extends Dokument {
 
     @Getter
     private final ProduktLeczniczy produktLeczniczy;
-    private final Optional<LocalDateTime> dataRealizacjiOd;
+    private final LocalDateTime dataRealizacjiOd;
 
-    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy, Optional<LocalDateTime> dataRealizacjiOd) {
+    public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy, LocalDateTime dataRealizacjiOd) {
         super(idDokumentu);
         this.produktLeczniczy = produktLeczniczy;
         this.dataRealizacjiOd = dataRealizacjiOd;
     }
 
     public Recepta(String idDokumentu, ProduktLeczniczy produktLeczniczy) {
-        this(idDokumentu, produktLeczniczy, Optional.empty());
+        this(idDokumentu, produktLeczniczy, null);
+    }
+
+    public Optional<LocalDateTime> getDataRealizacjiOd() { //TODO użycie w metodzie
+        return Optional.ofNullable(dataRealizacjiOd);
     }
 
     @Override
