@@ -40,6 +40,8 @@ public class ProduktLeczniczy {
         if (AptekaDao.pobierzProduktLeczniczyPoGtin(gtin) == null) {
             AptekaDao.zapiszProduktLeczniczy(this);
         }
+        substancjeCzynne.forEach(
+                substancjaCzynna -> substancjaCzynna.dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(this));
     }
 
     public boolean czyProduktNarkotyczny() {

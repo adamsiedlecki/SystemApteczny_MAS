@@ -1,10 +1,10 @@
 package net.asiedlecki.system.apteczny;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -19,7 +19,18 @@ public class SubstancjaCzynna {
 
     private String nazwaPolska;
 
+    @Transient
+    private List<ProduktLeczniczy> lekiZawierajaceSubstancje = new ArrayList<>();
+
     public SubstancjaCzynna(String nazwaPolska) {
         this.nazwaPolska = nazwaPolska;
+    }
+
+    public void dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(ProduktLeczniczy produktLeczniczy) {
+        lekiZawierajaceSubstancje.add(produktLeczniczy);
+    }
+
+    public List<ProduktLeczniczy> produktyLeczniczeZawierajace() {
+        return lekiZawierajaceSubstancje;
     }
 }
