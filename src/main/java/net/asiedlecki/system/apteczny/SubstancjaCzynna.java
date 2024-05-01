@@ -17,6 +17,7 @@ import java.util.Set;
 @Setter
 public class SubstancjaCzynna {
 
+    @Transient
     private Set<JednostkaChorobowaSubstancjaCzynna> chorobyWKtorychSubstancjaJestPomocna = new HashSet<>();
 
     @Id
