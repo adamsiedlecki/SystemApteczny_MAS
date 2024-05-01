@@ -2,6 +2,7 @@ import net.asiedlecki.system.apteczny.DrogaPodaniaEnum
 import net.asiedlecki.system.apteczny.JednostkaChorobowa
 import net.asiedlecki.system.apteczny.JednostkaChorobowaSubstancjaCzynna
 import net.asiedlecki.system.apteczny.Pacjent
+import net.asiedlecki.system.apteczny.PlacowkaApteki
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
 import spock.lang.Specification
@@ -93,6 +94,25 @@ class MiniProjekt2Spec extends Specification {
     }
 
     def "powinien mieć kompozycję"() {
+        given: "mamy dwie placówki"
+        PlacowkaApteki placowkaApteki1 = new PlacowkaApteki(1)
+        PlacowkaApteki placowkaApteki2 = new PlacowkaApteki(2)
+
+        when: "pracownik może pracować wyłącznie w jednej placówce i jest jej 'częścią' - z punktu widzenia biznesowego wiadomo, że sieć nigdy nie podpisuje umów w inny sposób"
+        PlacowkaApteki.PracownikApteki krystyna = placowkaApteki1.dodajPracownika("Krystyna", "Bóbr")
+        PlacowkaApteki.PracownikApteki zbigniew = placowkaApteki1.dodajPracownika("Zbigniew", "Bóbr")
+
+        PlacowkaApteki.PracownikApteki janusz = placowkaApteki2.dodajPracownika("Janusz", "Bóbr")
+
+        then: "można pobrać praconików zatrudnionych w danej aptece"
+        placowkaApteki1.getPracownicy() == [krystyna, zbigniew] as Set
+        placowkaApteki2.getPracownicy() == [janusz] as Set
+
+        and: "istnieje połączenie zwrotne"
+        krystyna.pobierzPlacowke() == placowkaApteki1
+        zbigniew.pobierzPlacowke() == placowkaApteki1
+
+        janusz.pobierzPlacowke() == placowkaApteki2
     }
 
 }
