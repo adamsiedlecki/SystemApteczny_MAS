@@ -1,4 +1,6 @@
+import net.asiedlecki.system.apteczny.DrogaPodaniaEnum
 import net.asiedlecki.system.apteczny.JednostkaChorobowa
+import net.asiedlecki.system.apteczny.JednostkaChorobowaSubstancjaCzynna
 import net.asiedlecki.system.apteczny.Pacjent
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
@@ -35,8 +37,32 @@ class MiniProjekt2Spec extends Specification {
     }
 
     def "powinien mieć asocjację z atrybutem "() {
+        // Substancja czynna może leczyć wiele chorób.
+        // Choroba może być leczona wieloma substncjami czynnym.
+        // Dodatkowym atrybutem jest "droga podania"  - może być różna w zależności od zastsowania
+        given:
+        def psylocybina = new SubstancjaCzynna("psylocybina")
+        def kofeina     = new SubstancjaCzynna("kofeina")
 
+        def migrena = new JednostkaChorobowa("G43", "Migrena", "Zaburzenia okresowe i napadowe")
+        def zaburzeniaSnu = new JednostkaChorobowa("G47", "Zaburzenia snu", "Zaburzenia okresowe i napadowe")
 
+        when:
+        JednostkaChorobowaSubstancjaCzynna psylocybinaNaMigrene = new JednostkaChorobowaSubstancjaCzynna(migrena, psylocybina, DrogaPodaniaEnum.DOUSTNA)
+        JednostkaChorobowaSubstancjaCzynna kofeinaNaMigrene = new JednostkaChorobowaSubstancjaCzynna(migrena, kofeina, DrogaPodaniaEnum.DOUSTNA)
+
+        JednostkaChorobowaSubstancjaCzynna psylocybinaNaZaburzeniaSnu = new JednostkaChorobowaSubstancjaCzynna(zaburzeniaSnu, psylocybina, DrogaPodaniaEnum.WZIEWNA)
+
+        then: "substancje wiedzą o swoich połączeniach z chorobami"
+        psylocybina.getChorobyWKtorychSubstancjaJestPomocna() == [psylocybinaNaMigrene, psylocybinaNaZaburzeniaSnu] as Set
+        kofeina.getChorobyWKtorychSubstancjaJestPomocna() == [kofeinaNaMigrene] as Set
+
+        and: "istnieje połączenie zwrotne - choroby wiedzą o swoich połączeniach z substancjami"
+        migrena.getSubstncjeKtoreSaPomocneWLeczeniu() == [psylocybinaNaMigrene, kofeinaNaMigrene] as Set
+        zaburzeniaSnu.getSubstncjeKtoreSaPomocneWLeczeniu() == [psylocybinaNaZaburzeniaSnu] as Set
+
+        and: "co najważniejsze - istnieje atrybut"
+        psylocybinaNaMigrene.drogaPodaniaEnum == DrogaPodaniaEnum.DOUSTNA
     }
 
     def "powinien mieć asocjację kwalifikowaną "() {
