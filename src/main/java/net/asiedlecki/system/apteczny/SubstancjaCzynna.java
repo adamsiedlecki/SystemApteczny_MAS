@@ -34,7 +34,7 @@ public class SubstancjaCzynna {
     }
 
     public void dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(ProduktLeczniczy produktLeczniczy) {
-        lekiZawierajaceSubstancje.add(produktLeczniczy);
+        lekiZawierajaceSubstancje.add(produktLeczniczy); // TODO metoda add
     }
 
     public List<ProduktLeczniczy> produktyLeczniczeZawierajace() {

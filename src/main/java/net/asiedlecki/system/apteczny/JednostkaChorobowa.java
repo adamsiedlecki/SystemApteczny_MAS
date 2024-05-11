@@ -24,7 +24,7 @@ public class JednostkaChorobowa {
     private final String nazwaKategorii;
 
     public void dodajPacjenta(Pacjent pacjent) {
-        pacjenci.put(pacjent.getId(), pacjent);
+        pacjenci.put(pacjent.getId(), pacjent); // tODO symetria prezentacja 5 slajd 40
     }
 
     public void usunPacjenta(Pacjent pacjent) {
