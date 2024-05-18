@@ -1,7 +1,7 @@
 import net.asiedlecki.system.apteczny.AptekaDao
-import net.asiedlecki.system.apteczny.dokumenty.Dokument
+import net.asiedlecki.system.apteczny.model.dokumenty.Dokument
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
-import net.asiedlecki.system.apteczny.dokumenty.Recepta
+import net.asiedlecki.system.apteczny.model.dokumenty.Recepta
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
 import net.asiedlecki.system.apteczny.serwisy.RealizacjaReceptyService
 import spock.lang.Specification
@@ -87,7 +87,11 @@ class MiniProjekt1Spec extends Specification {
     def "powinien mieć przesłonięcie - opis dokumentów"() {
         when:
         Dokument recepta = new Recepta("id", null,  LocalDateTime.now().plusDays(100))
-        Dokument dokument = new Dokument("id")
+        Dokument dokument = new Dokument("id"){
+            public String utworzOpis() {
+                return "Dokument o id: "+ idDokumentu // zmiana dokonana w wyniku prac nad MP3
+            }
+        }
 
         then:
         recepta.utworzOpis() == "Recepta o id: id"

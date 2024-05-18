@@ -2,7 +2,7 @@ package net.asiedlecki.system.apteczny.serwisy;
 
 import net.asiedlecki.system.apteczny.ProduktLeczniczy;
 import net.asiedlecki.system.apteczny.SubstancjaCzynna;
-import net.asiedlecki.system.apteczny.dokumenty.Recepta;
+import net.asiedlecki.system.apteczny.model.dokumenty.Recepta;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

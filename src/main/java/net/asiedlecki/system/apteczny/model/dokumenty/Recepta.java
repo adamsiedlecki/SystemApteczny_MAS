@@ -1,4 +1,4 @@
-package net.asiedlecki.system.apteczny.dokumenty;
+package net.asiedlecki.system.apteczny.model.dokumenty;
 
 import lombok.Getter;
 import net.asiedlecki.system.apteczny.ProduktLeczniczy;

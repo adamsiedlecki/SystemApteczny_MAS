@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import net.asiedlecki.system.apteczny.AptekaDao;
-import net.asiedlecki.system.apteczny.dokumenty.Recepta;
+import net.asiedlecki.system.apteczny.model.dokumenty.Recepta;
 import net.asiedlecki.system.apteczny.serwisy.PobieranieReceptZKrajowegoSystemuService;
 import net.asiedlecki.system.apteczny.vaadin.komponenty.AptecznyMenuBar;
 import org.springframework.stereotype.Component;

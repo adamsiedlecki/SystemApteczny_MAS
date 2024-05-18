@@ -1,8 +1,9 @@
-package net.asiedlecki.system.apteczny;
+package net.asiedlecki.system.apteczny.model.punkty.sprzedazy;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import net.asiedlecki.system.apteczny.model.osoby.PracownikAptekiInterface;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class PlacowkaApteki {
 
     @ToString
     @Getter
-    public class PracownikApteki {
+    public class PracownikApteki implements PracownikAptekiInterface {
         private String imie;
         private String nazwisko;
 
@@ -31,6 +32,7 @@ public class PlacowkaApteki {
             pracownicy.add(this);
         }
 
+        @Override
         public PlacowkaApteki pobierzPlacowke() {
             return PlacowkaApteki.this;
         }

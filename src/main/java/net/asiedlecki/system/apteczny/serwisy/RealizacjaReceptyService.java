@@ -1,7 +1,7 @@
 package net.asiedlecki.system.apteczny.serwisy;
 
 import groovy.util.logging.Slf4j;
-import net.asiedlecki.system.apteczny.dokumenty.Recepta;
+import net.asiedlecki.system.apteczny.model.dokumenty.Recepta;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

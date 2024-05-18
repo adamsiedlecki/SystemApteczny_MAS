@@ -1,9 +1,10 @@
-package net.asiedlecki.system.apteczny;
+package net.asiedlecki.system.apteczny.model.osoby;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.asiedlecki.system.apteczny.JednostkaChorobowa;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Pacjent {
+public class Pacjent implements PacjentInterface {
 
     private final Map<String, JednostkaChorobowa> chorobyPacjenta = new HashMap<>(); // MP2 asocjacja kwalifikowana
 
@@ -21,6 +22,7 @@ public class Pacjent {
     private String imie;
     private String nazwisko;
 
+    @Override
     public void dodajChorobe(JednostkaChorobowa jednostkaChorobowa) {
         if (!chorobyPacjenta.containsKey(jednostkaChorobowa.getKodIcd10())) {
             chorobyPacjenta.put(jednostkaChorobowa.getKodIcd10(), jednostkaChorobowa); // symetria
@@ -28,6 +30,7 @@ public class Pacjent {
         }
     }
 
+    @Override
     public void usunChorobe(JednostkaChorobowa jednostkaChorobowa) {
         if (chorobyPacjenta.containsKey(jednostkaChorobowa.getKodIcd10())) { // symetria
             chorobyPacjenta.remove(jednostkaChorobowa.getKodIcd10());
@@ -35,6 +38,7 @@ public class Pacjent {
         }
     }
 
+    @Override
     public String podajNazwyChorob() {
         return chorobyPacjenta.values().stream()
                 .map(JednostkaChorobowa::getNazwa)

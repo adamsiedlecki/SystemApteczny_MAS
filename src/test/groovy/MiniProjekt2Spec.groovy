@@ -1,8 +1,8 @@
 import net.asiedlecki.system.apteczny.DrogaPodaniaEnum
 import net.asiedlecki.system.apteczny.JednostkaChorobowa
 import net.asiedlecki.system.apteczny.JednostkaChorobowaSubstancjaCzynna
-import net.asiedlecki.system.apteczny.Pacjent
-import net.asiedlecki.system.apteczny.PlacowkaApteki
+import net.asiedlecki.system.apteczny.model.osoby.Pacjent
+import net.asiedlecki.system.apteczny.model.punkty.sprzedazy.PlacowkaApteki
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
 import net.asiedlecki.system.apteczny.SubstancjaCzynna
 import spock.lang.Specification

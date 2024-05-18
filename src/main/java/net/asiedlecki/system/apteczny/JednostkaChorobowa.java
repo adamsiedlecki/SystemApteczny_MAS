@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import net.asiedlecki.system.apteczny.model.osoby.Pacjent;
 
 import java.util.HashMap;
 import java.util.HashSet;
