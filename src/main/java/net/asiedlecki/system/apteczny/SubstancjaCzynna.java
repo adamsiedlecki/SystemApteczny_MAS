@@ -34,7 +34,17 @@ public class SubstancjaCzynna {
     }
 
     public void dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(ProduktLeczniczy produktLeczniczy) {
-        lekiZawierajaceSubstancje.add(produktLeczniczy); // TODO metoda add
+        if (!lekiZawierajaceSubstancje.contains(produktLeczniczy)) {
+            lekiZawierajaceSubstancje.add(produktLeczniczy);
+            produktLeczniczy.dodajSubstancjeCzynna(this);
+        }
+    }
+
+    public void usunProduktLeczniczyZawierajacy(ProduktLeczniczy produktLeczniczy) {
+        if (lekiZawierajaceSubstancje.contains(produktLeczniczy)) {
+            lekiZawierajaceSubstancje.remove(produktLeczniczy);
+            produktLeczniczy.usunSubstancjeCzynna(this);
+        }
     }
 
     public List<ProduktLeczniczy> produktyLeczniczeZawierajace() {

@@ -22,13 +22,17 @@ public class Pacjent {
     private String nazwisko;
 
     public void dodajChorobe(JednostkaChorobowa jednostkaChorobowa) {
-        chorobyPacjenta.put(jednostkaChorobowa.getKodIcd10(), jednostkaChorobowa);
-        jednostkaChorobowa.dodajPacjenta(this);
+        if (!chorobyPacjenta.containsKey(jednostkaChorobowa.getKodIcd10())) {
+            chorobyPacjenta.put(jednostkaChorobowa.getKodIcd10(), jednostkaChorobowa); // symetria
+            jednostkaChorobowa.dodajPacjenta(this);
+        }
     }
 
     public void usunChorobe(JednostkaChorobowa jednostkaChorobowa) {
-        chorobyPacjenta.remove(jednostkaChorobowa.getKodIcd10());
-        jednostkaChorobowa.usunPacjenta(this);
+        if (chorobyPacjenta.containsKey(jednostkaChorobowa.getKodIcd10())) { // symetria
+            chorobyPacjenta.remove(jednostkaChorobowa.getKodIcd10());
+            jednostkaChorobowa.usunPacjenta(this);
+        }
     }
 
     public String podajNazwyChorob() {

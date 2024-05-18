@@ -24,11 +24,17 @@ public class JednostkaChorobowa {
     private final String nazwaKategorii;
 
     public void dodajPacjenta(Pacjent pacjent) {
-        pacjenci.put(pacjent.getId(), pacjent); // tODO symetria prezentacja 5 slajd 40
+        if (!pacjenci.containsKey(pacjent.getId())) {
+            pacjenci.put(pacjent.getId(), pacjent);
+            pacjent.dodajChorobe(this); // symetria
+        }
     }
 
     public void usunPacjenta(Pacjent pacjent) {
-        pacjenci.remove(pacjent.getId());
+        if (pacjenci.containsKey(pacjent.getId())) {
+            pacjenci.remove(pacjent.getId());
+            pacjent.usunChorobe(this); // symetria
+        }
     }
 
     public Set<Pacjent> pobierzPacjentowCierpiacychNaChorobe() {

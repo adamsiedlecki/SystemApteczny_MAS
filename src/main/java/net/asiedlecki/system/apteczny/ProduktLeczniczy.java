@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.asiedlecki.system.apteczny.db.config.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +39,21 @@ public class ProduktLeczniczy {
         }
         substancjeCzynne.forEach(
                 substancjaCzynna -> substancjaCzynna.dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(this));
+    }
+
+    // na potrzeby spełnienia założeń z wykładu
+    public void dodajSubstancjeCzynna(SubstancjaCzynna substancjaCzynna) {
+        if (!substancjeCzynne.contains(substancjaCzynna)) {
+            substancjeCzynne.add(substancjaCzynna);
+            substancjaCzynna.dodajInforamcjeOProdukcieLeczniczymZawierajacymSubstancje(this);
+        }
+    }
+
+    public void usunSubstancjeCzynna(SubstancjaCzynna substancjaCzynna) {
+        if (substancjeCzynne.contains(substancjaCzynna)) {
+            substancjeCzynne.remove(substancjaCzynna);
+            substancjaCzynna.usunProduktLeczniczyZawierajacy(this);
+        }
     }
 
     public boolean czyProduktNarkotyczny() {
