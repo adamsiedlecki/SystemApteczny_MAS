@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import net.asiedlecki.system.apteczny.JednostkaChorobowa;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;

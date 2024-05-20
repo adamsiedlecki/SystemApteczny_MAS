@@ -1,4 +1,5 @@
 import net.asiedlecki.system.apteczny.ProduktLeczniczy
+import net.asiedlecki.system.apteczny.SubstancjaCzynna
 import net.asiedlecki.system.apteczny.model.dokumenty.Dokument
 import net.asiedlecki.system.apteczny.model.dokumenty.RealizacjaRecepty
 import net.asiedlecki.system.apteczny.model.dokumenty.Recepta
@@ -31,7 +32,36 @@ class MiniProjekt3Spec extends Specification {
     }
 
     def "powinien być overlapping - przenikanie się klas"() {
+        given: "pracowników można zatrundiać z różnym zakresem obowiązków, które mogą się przenikać"
+        PlacowkaApteki placowkaApteki = new PlacowkaApteki(1)
+        PlacowkaApteki.PracownikApteki pracownikAptekiFarmaceuta = placowkaApteki.dodajPracownika("Jan", "Kowalski")
 
+        PlacowkaApteki.PracownikApteki pracownikAptekiSprzataczFarmaceuta = placowkaApteki.dodajPracownika("Jan", "Nowak")
+        pracownikAptekiSprzataczFarmaceuta.dodajTypPracownika(PlacowkaApteki.PracownikApteki.PracownikAptekiType.SPRZATACZ)
+
+        PlacowkaApteki.PracownikApteki pracownikAptekiSprzatacz = placowkaApteki.dodajPracownika("Jan", "Zielony")
+        pracownikAptekiSprzatacz.dodajTypPracownika(PlacowkaApteki.PracownikApteki.PracownikAptekiType.SPRZATACZ)
+        pracownikAptekiSprzatacz.usunTypPracownikaa(PlacowkaApteki.PracownikApteki.PracownikAptekiType.FARMACEUTA)
+
+        ProduktLeczniczy produktLeczniczy = new ProduktLeczniczy("dasdasdsa", List.of(new SubstancjaCzynna("kofeina")))
+
+        when:
+        String porada1 = pracownikAptekiFarmaceuta.udzielPoradyFarmaceutycznej(produktLeczniczy)
+        String porada2 = pracownikAptekiSprzataczFarmaceuta.udzielPoradyFarmaceutycznej(produktLeczniczy)
+
+        String sprzatanie1 = pracownikAptekiSprzatacz.sprzatajLokal()
+        String sprzatanie2 = pracownikAptekiSprzataczFarmaceuta.sprzatajLokal()
+
+        then:
+        noExceptionThrown()
+        porada1 == porada2
+        sprzatanie1 == sprzatanie2
+
+        when:
+        pracownikAptekiSprzatacz.udzielPoradyFarmaceutycznej(produktLeczniczy)
+
+        then: "sprzątacz nie może udzielać porad farmaceutycznych!"
+        thrown(IllegalStateException)
     }
 
     def "powinno być wielodziedziczenie"() {
