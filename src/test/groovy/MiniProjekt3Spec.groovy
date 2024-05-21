@@ -3,6 +3,9 @@ import net.asiedlecki.system.apteczny.SubstancjaCzynna
 import net.asiedlecki.system.apteczny.model.dokumenty.Dokument
 import net.asiedlecki.system.apteczny.model.dokumenty.RealizacjaRecepty
 import net.asiedlecki.system.apteczny.model.dokumenty.Recepta
+import net.asiedlecki.system.apteczny.model.magazyn.narzedzi.MaterialWykonania
+import net.asiedlecki.system.apteczny.model.magazyn.narzedzi.NozDoKrojeniaTabletek
+import net.asiedlecki.system.apteczny.model.magazyn.narzedzi.NozDoPizzy
 import net.asiedlecki.system.apteczny.model.osoby.Pacjent
 import net.asiedlecki.system.apteczny.model.osoby.PacjentBedacyPracownikiemApteki
 import net.asiedlecki.system.apteczny.model.osoby.PacjentInterface
@@ -82,8 +85,34 @@ class MiniProjekt3Spec extends Specification {
         PracownikAptekiInterface pracownikZPacjenta = pacjentBedacyPracownikiemApteki
     }
 
+    // wykład 7 str 46 Jedną z hierarchii
+    //zastępujemy
+    //kompozycją
     def "powinno być wielodziedziczenie wieloaspektowe"() {
+        given: "noże dzielą się na takie profesjonalne do tabletek i takie do pizzy. Te do pizzy zużywają się 10 razy wolniej"
+                "Noże dzielą się także ze względu na materiał. Każdy materiał zużywa się w innym tempie"
+        NozDoKrojeniaTabletek tytanowyNozDoKrojeniaTabletek = new NozDoKrojeniaTabletek(MaterialWykonania.TYTAN) // zużywa się po 1000 użyciach
 
+        NozDoPizzy tytanowyNozDoPizzy = new NozDoPizzy(MaterialWykonania.TYTAN)
+
+        when:
+        tytanowyNozDoKrojeniaTabletek.zarejestrujUzycie(1000)
+        tytanowyNozDoPizzy.zarejestrujUzycie(1000)
+
+        then: "ten do pizzy nie zdążył się zużyć mimo takiego samego materiału"
+        tytanowyNozDoKrojeniaTabletek.czyJestZuzyty()
+        !tytanowyNozDoPizzy.czyJestZuzyty()
+
+        and: "ceramika zużywa się szybciej niż tytan"
+        NozDoKrojeniaTabletek tytanowyNozDoKrojeniaTabletek2 = new NozDoKrojeniaTabletek(MaterialWykonania.TYTAN)
+        NozDoKrojeniaTabletek ceramicznyNozDoKrojeniaTabletek = new NozDoKrojeniaTabletek(MaterialWykonania.CERAMIKA)
+
+        tytanowyNozDoKrojeniaTabletek2.zarejestrujUzycie(10)
+        ceramicznyNozDoKrojeniaTabletek.zarejestrujUzycie(10)
+
+        then:
+        ceramicznyNozDoKrojeniaTabletek.czyJestZuzyty()
+        !tytanowyNozDoKrojeniaTabletek2.czyJestZuzyty()
     }
 
     def "powinno być wielodziedziczenie dynamiczne"() {
