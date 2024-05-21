@@ -11,6 +11,10 @@ import net.asiedlecki.system.apteczny.model.osoby.PacjentBedacyPracownikiemAptek
 import net.asiedlecki.system.apteczny.model.osoby.PacjentInterface
 import net.asiedlecki.system.apteczny.model.osoby.PracownikAptekiInterface
 import net.asiedlecki.system.apteczny.model.punkty.sprzedazy.PlacowkaApteki
+import net.asiedlecki.system.apteczny.model.zadania.AnalizaOrazDoborSkladnikow
+import net.asiedlecki.system.apteczny.model.zadania.GotowanieSkladnikow
+import net.asiedlecki.system.apteczny.model.zadania.MieszanieSkladnikow
+import net.asiedlecki.system.apteczny.model.zadania.PakowanieWytworu
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -116,7 +120,38 @@ class MiniProjekt3Spec extends Specification {
     }
 
     def "powinno być wielodziedziczenie dynamiczne"() {
+        given: "Są w systemie zadania, które zleca się pracownikom. Zadania z czasem zmieniają swój charakter."
+                "wraz ze zmianą charakteru zadania, może je wykonywać inna osoba"
+        PlacowkaApteki placowkaApteki = new PlacowkaApteki(1)
+        PlacowkaApteki.PracownikApteki pracownik = placowkaApteki.dodajPracownika("Jan", "kowalski")
 
+        AnalizaOrazDoborSkladnikow analiza = new AnalizaOrazDoborSkladnikow(1)
+        analiza.przydzielPracownika(pracownik)
+
+        MieszanieSkladnikow mieszanieSkladnikow1 = new MieszanieSkladnikow(analiza)
+        mieszanieSkladnikow1.przydzielPracownika(pracownik)
+
+        GotowanieSkladnikow gotowanieSkladnikow1 = new GotowanieSkladnikow(mieszanieSkladnikow1)
+        gotowanieSkladnikow1.przydzielPracownika(pracownik)
+
+        MieszanieSkladnikow mieszanieSkladnikow2 = new MieszanieSkladnikow(gotowanieSkladnikow1)
+        mieszanieSkladnikow2.przydzielPracownika(pracownik)
+
+        and:
+        analiza.czyFazaWykonana
+        mieszanieSkladnikow1.czyFazaWykonana
+        gotowanieSkladnikow1.czyFazaWykonana
+        mieszanieSkladnikow2.czyFazaWykonana
+
+        when:
+        PakowanieWytworu pakowanieWytworu = new PakowanieWytworu(mieszanieSkladnikow2)
+        pakowanieWytworu.przydzielPracownika(pracownik)
+
+        then:
+        pakowanieWytworu.czyFazaWykonana
+
+        and:
+        pakowanieWytworu.utworzRaportZeWszystkichFaz() == "AnalizaOrazDoborSkladnikow -> MieszanieSkladnikow -> GotowanieSkladnikow -> MieszanieSkladnikow -> PakowanieWytworu"
     }
 
 }
