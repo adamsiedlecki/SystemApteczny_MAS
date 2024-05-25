@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.asiedlecki.system.apteczny.model.punkty.sprzedazy.PlacowkaApteki;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,8 @@ public class PakowanieWytworu extends ZadanieWytworzeniaLeku{
         while((poprzednie = poprzednie.pobierzPoprzednieZadanie()) != null) {
             list.add(poprzednie.getClass().getSimpleName());
         }
-        return String.join(" -> ", list.reversed());
+        Collections.reverse(list);
+        return String.join(" -> ", list);
     }
 
     @Override
