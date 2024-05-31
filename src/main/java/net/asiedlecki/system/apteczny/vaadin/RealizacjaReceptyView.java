@@ -4,11 +4,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.Route;
-import net.asiedlecki.system.apteczny.AptekaDao;
-import net.asiedlecki.system.apteczny.model.dokumenty.Recepta;
-import net.asiedlecki.system.apteczny.serwisy.PobieranieReceptZKrajowegoSystemuService;
+import net.asiedlecki.system.apteczny.model.Lek;
+import net.asiedlecki.system.apteczny.serwisy.PobieranieLekuZBazyService;
 import net.asiedlecki.system.apteczny.vaadin.komponenty.AptecznyMenuBar;
 import org.springframework.stereotype.Component;
 
@@ -16,21 +15,29 @@ import org.springframework.stereotype.Component;
 @Route("realizacja-recepty")
 public class RealizacjaReceptyView extends VerticalLayout {
 
-    public RealizacjaReceptyView(PobieranieReceptZKrajowegoSystemuService pobieranieReceptZKrajowegoSystemuService) {
+    public RealizacjaReceptyView() {
         AptecznyMenuBar.dodajMenuBar(this);
 
-        add(new TextField("id dokumentu recepty od pacjenta", event -> {
-            Recepta recepta = pobieranieReceptZKrajowegoSystemuService.pobierz(event.getValue());
-            if (recepta != null) {
-                Notification.show("System krajowy potwierdza istnienie recepty na lek: " + recepta.getProduktLeczniczy().utworzOpis());
-            } else {
-                Notification.show("Nie znaleziono recepty w systemie krajowym");
+        ComboBox<Lek> lekiDoWydaniaCombobox= new ComboBox<>("Lek do wydania", PobieranieLekuZBazyService.pobierzLeki());
+        NumberField iloscOpakowan = new NumberField("ilość opakowań", "1");
+        iloscOpakowan.setMin(1);
+        iloscOpakowan.setMax(100);
+
+        Button przejdzDalejButton = new Button("Przejdź dalej", event -> {
+            if (lekiDoWydaniaCombobox.getValue() == null || iloscOpakowan.getValue() == null) {
+                Notification.show("Nie podano ilości opakowań lub leku");
+                return;
             }
-        }));
-        add(new ComboBox<>("Lek do wydania", AptekaDao.pobierzProduktyLeczniczeWBazieDanychApteki()));
-        add(new Button("Zrealizuj recepte", event -> {
-            Notification.show("Nie zimplementowano TODO");
-        }));
+            if (!lekiDoWydaniaCombobox.getValue().isCzyWymagaRecepty()) {
+                return; // TODO wyświetlić substancje czynne i przycisk do zakończenia sprzedaży
+            }
+        });
+
+        add(lekiDoWydaniaCombobox);
+        add(iloscOpakowan);
+        add(przejdzDalejButton);
+
+
     }
 
 }
