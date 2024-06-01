@@ -11,7 +11,7 @@ public class SystemPanstwowyService {
      * @param idRecepty
      * @return odpowiedź
      */
-    public OdpowiedzSystemuPanstwowego pobierz(String idRecepty) {
+    public static OdpowiedzSystemuPanstwowego pobierz(String idRecepty) {
         if (idRecepty.equals("2137")) {
             return new OdpowiedzSystemuPanstwowego(false, "zabronione jest szydzenie z papieza!");
         }

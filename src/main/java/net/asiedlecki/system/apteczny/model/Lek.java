@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -27,5 +28,11 @@ public class Lek {
     @Override
     public String toString() {
         return nazwaPolska;
+    }
+
+    public String pobierzSusbtancjeZOpisami() {
+        return substacjeCzynne.stream()
+                .map(s -> s.getNazwaPolska() + " " + (s.getOpisNarkotycznej() != null ? s.getOpisNarkotycznej() : ""))
+                .collect(Collectors.joining("\n"));
     }
 }
