@@ -1,17 +1,18 @@
 problemy:
 Należy zrealizować minimum 13 konstrukcji ze wszystkich mini-projektów - min połowę z każdego MP
 Z bazy danych odczytujemy dane tylko raz, po uruchomieniu aplikacji
-Przypadek użycia musi działać na asocjacji wiele-do-wielu
+DONE Przypadek użycia musi działać na asocjacji wiele-do-wielu
 
 https://users.pja.edu.pl/~mtrzaska/Files/MAS/MAS-informacje-zaoczne.pdf
 
 
 konstrukcje:
 
-MP1: 3 / 9
+MP1: 4 / 9
 - atrybut złożony np. sprzedaż leku dotyczy leku
 - atrybut opcjonalny np. miesiąc w raporcie na diagramie projektowym
 - atrybut pochodny - Substancja czynna - czy narkotyczna - na diagramie projektowym
+- atrybut klasowy - min wykształcenie: SREDNIE w klasie pracownik
 
 MP2: 1 / 4
 - asocjacja zwykła np czas pracy a pracownik
