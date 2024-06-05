@@ -8,17 +8,22 @@ https://users.pja.edu.pl/~mtrzaska/Files/MAS/MAS-informacje-zaoczne.pdf
 
 konstrukcje:
 
-MP1: 4 / 9
+MP1: 7 / 9
+- ekstensja - będzie w implementacji, na diagramach nie widać
+- trwałość  - będzie w implementacji, na diagramach nie widać
+
 - atrybut złożony np. sprzedaż leku dotyczy leku
 - atrybut opcjonalny np. miesiąc w raporcie na diagramie projektowym
 - atrybut pochodny - Substancja czynna - czy narkotyczna - na diagramie projektowym
 - atrybut klasowy - min wykształcenie: SREDNIE w klasie pracownik
+- przesłonięcie/ przeciążenie - na diagramie projektowym, podtypy raportu definiują swoje własne metody do generowania raportu
 
-MP2: 1 / 4
+MP2: 3 / 4
 - asocjacja zwykła np czas pracy a pracownik
-
+- asocjacja z atrybutem np. atrybut ilość pomiędzy lekiem a substancją czynną
+- asocjacja kwalifikowana - lek może być jednoznacznie identyfikowany przez swoją nazwę polską (asocjacja ze sprzedażą leku)
 
 MP3: 3 / 5
 - klasa abstrkcyjna - Raport
 - overlapping - rodzaje pracowników apteki
-- dynamiczne - rodzaje pracowników apteki
+- dynamiczne  - rodzaje pracowników apteki
