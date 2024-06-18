@@ -2,6 +2,7 @@ package net.asiedlecki.system.apteczny;
 
 
 import net.asiedlecki.system.apteczny.serwisy.DaneInicjalne;
+import net.asiedlecki.system.apteczny.serwisy.KontrolaEkstensji;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,5 +12,7 @@ public class SystemAptecznyMain {
         SpringApplication.run(SystemAptecznyMain.class, args);
 
         DaneInicjalne.zapiszInicjalneDane();
+
+        KontrolaEkstensji.zaladujBazeDanychDoEkstensji();
     }
 }

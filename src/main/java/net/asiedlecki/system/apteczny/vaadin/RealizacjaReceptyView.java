@@ -2,6 +2,7 @@ package net.asiedlecki.system.apteczny.vaadin;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -10,7 +11,10 @@ import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import lombok.extern.slf4j.Slf4j;
 import net.asiedlecki.system.apteczny.model.Lek;
+import net.asiedlecki.system.apteczny.model.PracownikApteki;
+import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
 import net.asiedlecki.system.apteczny.serwisy.LekiService;
 import net.asiedlecki.system.apteczny.serwisy.system.panstwowy.OdpowiedzSystemuPanstwowego;
 import net.asiedlecki.system.apteczny.serwisy.system.panstwowy.SystemPanstwowyService;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component
 @Route("realizacja-recepty")
@@ -30,6 +35,14 @@ public class RealizacjaReceptyView extends VerticalLayout {
         AptecznyMenuBar.dodajMenuBar(this);
 
         HorizontalLayout horizontalLayout = new HorizontalLayout();
+        VerticalLayout farmaceuciVerticalLayout = new VerticalLayout();
+        PracownikApteki.pracownicyEkstensja.forEach(p -> log.info(p.toString()));
+        PracownikApteki.pracownicyEkstensja.stream().filter(p -> p.getTypPracownikaEnum().contains(TypPracownikaEnum.FARMACEUTA))
+                .forEach(p -> {
+                    Checkbox checkbox = new Checkbox(p.getImie() + " " + p.getNazwisko());
+                    farmaceuciVerticalLayout.add(checkbox);
+                });
+
         VerticalLayout verticalLayout = new VerticalLayout();
         VerticalLayout formVerticalLayout = new VerticalLayout();
 
@@ -96,6 +109,7 @@ public class RealizacjaReceptyView extends VerticalLayout {
         verticalLayout.add(przejdzDalejButton);
         verticalLayout.add(zakonczSprzedazButton);
 
+        horizontalLayout.add(farmaceuciVerticalLayout);
         horizontalLayout.add(verticalLayout);
         add(horizontalLayout);
 

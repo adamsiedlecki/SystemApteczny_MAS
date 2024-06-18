@@ -4,25 +4,33 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import net.asiedlecki.system.apteczny.db.config.KonwerterEnumSetow;
 import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
 import net.asiedlecki.system.apteczny.model.enumy.WyksztalcenieEnum;
 
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class PracownikApteki {
 
     public static WyksztalcenieEnum MINIMALNE_WYKSZTALCENIE = WyksztalcenieEnum.SREDNIE;
+
+    public static Set<PracownikApteki> pracownicyEkstensja = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String imie;
     private String nazwisko;
+    @Convert(converter = KonwerterEnumSetow.class)
     private EnumSet<TypPracownikaEnum> typPracownikaEnum;
     private Integer lataPracy; // dotyczy farmaceuty
     @ManyToMany(fetch = FetchType.EAGER)

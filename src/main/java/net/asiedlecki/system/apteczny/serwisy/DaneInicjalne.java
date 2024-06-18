@@ -3,7 +3,9 @@ package net.asiedlecki.system.apteczny.serwisy;
 import net.asiedlecki.system.apteczny.db.config.HibernateUtil;
 import net.asiedlecki.system.apteczny.model.IloscSubstancjiCzynnej;
 import net.asiedlecki.system.apteczny.model.Lek;
+import net.asiedlecki.system.apteczny.model.PracownikApteki;
 import net.asiedlecki.system.apteczny.model.SubstancjaCzynna;
+import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
@@ -11,6 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.EnumSet;
 import java.util.List;
 
 public class DaneInicjalne {
@@ -54,6 +57,20 @@ public class DaneInicjalne {
             session.persist(lekZaldiar);
 
             session.persist(lekApap);
+
+
+            PracownikApteki pracownikApteki1 = new PracownikApteki();
+            pracownikApteki1.setImie("Jan");
+            pracownikApteki1.setNazwisko("Kowalski");
+            pracownikApteki1.setTypPracownikaEnum(EnumSet.of(TypPracownikaEnum.FARMACEUTA));
+            session.persist(pracownikApteki1);
+
+            PracownikApteki pracownikApteki2 = new PracownikApteki();
+            pracownikApteki2.setImie("Satoshi");
+            pracownikApteki2.setNazwisko("Nakamoto");
+            pracownikApteki2.setTypPracownikaEnum(EnumSet.of(TypPracownikaEnum.FARMACEUTA));
+            session.persist(pracownikApteki2);
+
             session.getTransaction().commit();
         }
     }
@@ -62,6 +79,7 @@ public class DaneInicjalne {
         s.doWork(connection -> {
             Statement statement = connection.createStatement();
 
+            statement.execute("DELETE FROM Lek_IloscSubstancjiCzynnej");
             statement.execute("DELETE FROM IloscSubstancjiCzynnej");
             statement.execute("DELETE FROM PracownikApteki_CzasPracy");
             statement.execute("DELETE FROM PracownikApteki_Raport");

@@ -13,7 +13,8 @@ public class AptecznyMenuBar {
     public static void dodajMenuBar(VerticalLayout target) {
         MenuBar menuBar = new MenuBar();
         menuBar.addItem("Strona główna", e -> navigateTo(""));
-        menuBar.addItem("Realizacja recepty", e -> navigateTo("realizacja-recepty"));
+        menuBar.addItem("Sprzedaj lek", e -> navigateTo("realizacja-recepty"));
+        menuBar.addItem("Moje godziny pracy", e -> navigateTo("moje-godziny-pracy"));
 
         target.add(new Text("System Apteczny MAS"));
         target.add(menuBar);
