@@ -19,8 +19,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component
 @Route("realizacja-recepty")
@@ -66,7 +64,7 @@ public class RealizacjaReceptyView extends VerticalLayout {
                 return;
             }
             if (!lekiDoWydaniaCombobox.getValue().isCzyWymagaRecepty()) {
-                horizontalLayout.add(new Text(lekiDoWydaniaCombobox.getValue().pobierzSusbtancjeZOpisami()));
+                horizontalLayout.add(new Text(lekiDoWydaniaCombobox.getValue().wyswietlSubstancjeCzynne()));
                 zakonczSprzedazButton.setEnabled(true);
                 event.getSource().setEnabled(false);
                 return;
@@ -79,7 +77,7 @@ public class RealizacjaReceptyView extends VerticalLayout {
                     OdpowiedzSystemuPanstwowego odpowiedz = SystemPanstwowyService.pobierz(idReceptyField.getValue());
                     if (odpowiedz.isCzyPozytywna()) {
                         formVerticalLayout.add(new Text("System państwowy zweryfikował recepę pozytywnie ✔"));
-                        horizontalLayout.add(new Text(lekiDoWydaniaCombobox.getValue().pobierzSusbtancjeZOpisami()));
+                        horizontalLayout.add(new Text(lekiDoWydaniaCombobox.getValue().wyswietlSubstancjeCzynne()));
                         zakonczSprzedazButton.setEnabled(true);
                         event.getSource().setEnabled(false);
                     } else {

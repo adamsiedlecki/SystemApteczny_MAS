@@ -24,4 +24,12 @@ public class Raport {
     private int month; // opcjonalnie
     private TypRaportuEnum typRaportuEnum;
     private String trescTekstowa;
+
+    private static Raport wygenerujRaportFinansowy(TypRaportuEnum typRaportuEnum, int rok, int miesiac) {
+        Raport raport = new Raport();
+        raport.setDataPowstania(LocalDate.now());
+        raport.setYear(rok);
+        raport.setMonth(miesiac);
+        return raport;
+    }
 }

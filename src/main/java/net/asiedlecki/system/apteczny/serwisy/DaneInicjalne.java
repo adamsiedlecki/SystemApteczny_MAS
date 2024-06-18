@@ -1,6 +1,7 @@
 package net.asiedlecki.system.apteczny.serwisy;
 
 import net.asiedlecki.system.apteczny.db.config.HibernateUtil;
+import net.asiedlecki.system.apteczny.model.IloscSubstancjiCzynnej;
 import net.asiedlecki.system.apteczny.model.Lek;
 import net.asiedlecki.system.apteczny.model.SubstancjaCzynna;
 import org.hibernate.Session;
@@ -32,14 +33,22 @@ public class DaneInicjalne {
             Lek lekApap = new Lek();
             lekApap.setNazwaPolska("apap");
             lekApap.setCena(BigDecimal.TEN);
-            lekApap.setSubstacjeCzynne(List.of(paracetamol));
+            IloscSubstancjiCzynnej iloscParacetamol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol);
+            session.persist(iloscParacetamol);
+
+            lekApap.setIlosciSubstancjiCzynnej(List.of(iloscParacetamol));
             lekApap.setCzyWymagaRecepty(false);
             lekApap.setIloscOpakowanWmagazynie(23);
 
             Lek lekZaldiar  = new Lek();
             lekZaldiar .setNazwaPolska("zaldiar");
             lekZaldiar .setCena(BigDecimal.TEN);
-            lekZaldiar .setSubstacjeCzynne(List.of(paracetamol, tramadol));
+            IloscSubstancjiCzynnej iloscParacetamol2 = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol);
+            IloscSubstancjiCzynnej iloscTramadol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.ONE, tramadol);
+            session.persist(iloscParacetamol2);
+            session.persist(iloscTramadol);
+
+            lekZaldiar .setIlosciSubstancjiCzynnej(List.of(iloscParacetamol2, iloscTramadol));
             lekZaldiar .setCzyWymagaRecepty(true);
             lekZaldiar .setIloscOpakowanWmagazynie(1);
             session.persist(lekZaldiar);
@@ -53,7 +62,7 @@ public class DaneInicjalne {
         s.doWork(connection -> {
             Statement statement = connection.createStatement();
 
-            statement.execute("DELETE FROM Lek_SubstancjaCzynna");
+            statement.execute("DELETE FROM IloscSubstancjiCzynnej");
             statement.execute("DELETE FROM PracownikApteki_CzasPracy");
             statement.execute("DELETE FROM PracownikApteki_Raport");
             statement.execute("DELETE FROM PracownikApteki_SprzedazLeku");

@@ -20,7 +20,7 @@ public class Lek {
     @Id
     private String nazwaPolska;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<SubstancjaCzynna> substacjeCzynne;
+    private List<IloscSubstancjiCzynnej> ilosciSubstancjiCzynnej;
     private BigDecimal cena;
     private int iloscOpakowanWmagazynie;
     private boolean czyWymagaRecepty;
@@ -30,9 +30,14 @@ public class Lek {
         return nazwaPolska;
     }
 
-    public String pobierzSusbtancjeZOpisami() {
-        return substacjeCzynne.stream()
-                .map(s -> s.getNazwaPolska() + " " + (s.getOpisNarkotycznej() != null ? s.getOpisNarkotycznej() : ""))
+    public String wyswietlSubstancjeCzynne() {
+        return ilosciSubstancjiCzynnej.stream()
+                .map(s -> s.getSubstancjaCzynna().getNazwaPolska() + " " + (s.getSubstancjaCzynna().getOpisNarkotycznej() != null ? s.getSubstancjaCzynna().getOpisNarkotycznej() : ""))
                 .collect(Collectors.joining("\n"));
+    }
+
+    public SprzedazLeku sprzedaj(int iloscOpakowan, String idRecepty, List<PracownikApteki> farmceuci) {
+        iloscOpakowanWmagazynie-=iloscOpakowan;
+        return new SprzedazLeku(null, idRecepty, iloscOpakowan, cena.multiply(BigDecimal.valueOf(iloscOpakowan)), this, farmceuci);
     }
 }

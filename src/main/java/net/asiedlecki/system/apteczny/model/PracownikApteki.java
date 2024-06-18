@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
+import net.asiedlecki.system.apteczny.model.enumy.WyksztalcenieEnum;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -14,6 +15,9 @@ import java.util.List;
 @Getter
 @Setter
 public class PracownikApteki {
+
+    public static WyksztalcenieEnum MINIMALNE_WYKSZTALCENIE = WyksztalcenieEnum.SREDNIE;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +28,7 @@ public class PracownikApteki {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CzasPracy> czasyPracy;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Raport> utworzoneRaporty;
+    private List<Raport> utworzoneRaporty; // dotyczy kierownika
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<SprzedazLeku> sprzedaze;
+    private List<SprzedazLeku> sprzedaze; // dotyczy farmaceuty
 }

@@ -17,7 +17,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">10</property>
         <property name="current_session_context_class">thread</property>
 
         <mapping class="net.asiedlecki.system.apteczny.model.PracownikApteki" />
@@ -25,6 +25,7 @@
         <mapping class="net.asiedlecki.system.apteczny.model.Lek" />
         <mapping class="net.asiedlecki.system.apteczny.model.Raport" />
         <mapping class="net.asiedlecki.system.apteczny.model.SprzedazLeku" />
+        <mapping class="net.asiedlecki.system.apteczny.model.IloscSubstancjiCzynnej" />
         <mapping class="net.asiedlecki.system.apteczny.model.SubstancjaCzynna" />
     </session-factory>
 </hibernate-configuration>
