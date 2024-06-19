@@ -7,11 +7,8 @@ import net.asiedlecki.system.apteczny.model.PracownikApteki;
 import net.asiedlecki.system.apteczny.model.SubstancjaCzynna;
 import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
 import org.hibernate.Session;
-import org.hibernate.jdbc.Work;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.EnumSet;
 import java.util.List;
@@ -53,7 +50,7 @@ public class DaneInicjalne {
 
             lekZaldiar .setIlosciSubstancjiCzynnej(List.of(iloscParacetamol2, iloscTramadol));
             lekZaldiar .setCzyWymagaRecepty(true);
-            lekZaldiar .setIloscOpakowanWmagazynie(1);
+            lekZaldiar .setIloscOpakowanWmagazynie(10);
             session.persist(lekZaldiar);
 
             session.persist(lekApap);

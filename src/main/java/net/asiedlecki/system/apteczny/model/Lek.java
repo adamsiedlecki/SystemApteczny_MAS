@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -17,6 +19,10 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class Lek {
+
+    @Getter
+    private static Set<Lek> lekiEksensja = new HashSet<>();
+
     @Id
     private String nazwaPolska;
     @ManyToMany(fetch = FetchType.EAGER)
