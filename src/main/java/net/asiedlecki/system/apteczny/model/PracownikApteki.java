@@ -32,11 +32,11 @@ public class PracownikApteki {
     @Convert(converter = KonwerterEnumSetow.class)
     private EnumSet<TypPracownikaEnum> typPracownikaEnum;
     private Integer lataPracy; // dotyczy farmaceuty
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<CzasPracy> czasyPracy;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Raport> utworzoneRaporty; // dotyczy kierownika
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<SprzedazLeku> sprzedaze; // dotyczy farmaceuty
 
     public void dodajSprzedaz(SprzedazLeku sprzedazLeku) {

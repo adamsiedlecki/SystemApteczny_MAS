@@ -15,6 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode
 public class SprzedazLeku {
 
+    @Getter
     private static Set<SprzedazLeku> sprzedazeEkstensja = new HashSet<>();
 
     @Id
@@ -25,7 +26,7 @@ public class SprzedazLeku {
     private BigDecimal cenaCalosci;
     @ManyToOne
     private Lek lek;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<PracownikApteki> farmaceuci;
 
     public SprzedazLeku(Long id, String idRecepty, int iloscOpakowan, BigDecimal cenaCalosci, Lek lek, List<PracownikApteki> farmaceuci) {

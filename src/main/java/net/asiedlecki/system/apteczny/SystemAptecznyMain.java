@@ -11,7 +11,7 @@ public class SystemAptecznyMain {
     public static void main(String[] args) {
         SpringApplication.run(SystemAptecznyMain.class, args);
 
-        DaneInicjalne.zapiszInicjalneDane();
+        //DaneInicjalne.zapiszInicjalneDane();
 
         KontrolaEkstensji.zaladujBazeDanychDoEkstensji();
     }
