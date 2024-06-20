@@ -20,7 +20,6 @@ import net.asiedlecki.system.apteczny.model.Lek;
 import net.asiedlecki.system.apteczny.model.PracownikApteki;
 import net.asiedlecki.system.apteczny.model.SprzedazLeku;
 import net.asiedlecki.system.apteczny.model.enumy.TypPracownikaEnum;
-import net.asiedlecki.system.apteczny.serwisy.LekiService;
 import net.asiedlecki.system.apteczny.serwisy.system.panstwowy.OdpowiedzSystemuPanstwowego;
 import net.asiedlecki.system.apteczny.serwisy.system.panstwowy.SystemPanstwowyService;
 import net.asiedlecki.system.apteczny.vaadin.komponenty.AptecznyMenuBar;

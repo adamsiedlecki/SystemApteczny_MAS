@@ -1,9 +1,6 @@
 package net.asiedlecki.system.apteczny.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +22,7 @@ public class Lek {
 
     @Id
     private String nazwaPolska;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<IloscSubstancjiCzynnej> ilosciSubstancjiCzynnej;
     private BigDecimal cena;
     private int iloscOpakowanWmagazynie;
@@ -45,5 +42,12 @@ public class Lek {
     public SprzedazLeku sprzedaj(int iloscOpakowan, String idRecepty, List<PracownikApteki> farmceuci) {
         iloscOpakowanWmagazynie-=iloscOpakowan;
         return new SprzedazLeku(null, idRecepty, iloscOpakowan, cena.multiply(BigDecimal.valueOf(iloscOpakowan)), this, farmceuci);
+    }
+
+    public void dodajIloscSubstancjiCzynnej(IloscSubstancjiCzynnej ilosc) {
+        if (ilosciSubstancjiCzynnej.contains(ilosc)) {
+            ilosciSubstancjiCzynnej.add(ilosc);
+            ilosc.setLek(this);
+        }
     }
 }

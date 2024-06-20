@@ -1,15 +1,14 @@
 package net.asiedlecki.system.apteczny.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +16,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class IloscSubstancjiCzynnej {
+
+    private static List<IloscSubstancjiCzynnej> ilosciEkstensja = new ArrayList<>();
+
     @Id
     @GeneratedValue
     private Long id;
@@ -24,4 +26,13 @@ public class IloscSubstancjiCzynnej {
     private BigDecimal wartosc;
     @ManyToOne
     private SubstancjaCzynna substancjaCzynna;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Lek lek;
+
+    public static void dodajDoEkstensji(IloscSubstancjiCzynnej ilosc) {
+        if (!ilosciEkstensja.contains(ilosc)) {
+            ilosciEkstensja.add(ilosc);
+            ilosc.getLek().dodajIloscSubstancjiCzynnej(ilosc);
+        }
+    }
 }

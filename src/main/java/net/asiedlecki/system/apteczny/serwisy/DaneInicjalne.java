@@ -33,7 +33,7 @@ public class DaneInicjalne {
             Lek lekApap = new Lek();
             lekApap.setNazwaPolska("apap");
             lekApap.setCena(BigDecimal.TEN);
-            IloscSubstancjiCzynnej iloscParacetamol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol);
+            IloscSubstancjiCzynnej iloscParacetamol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol, lekApap);
             session.persist(iloscParacetamol);
 
             lekApap.setIlosciSubstancjiCzynnej(List.of(iloscParacetamol));
@@ -43,16 +43,16 @@ public class DaneInicjalne {
             Lek lekZaldiar  = new Lek();
             lekZaldiar .setNazwaPolska("zaldiar");
             lekZaldiar .setCena(BigDecimal.TEN);
-            IloscSubstancjiCzynnej iloscParacetamol2 = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol);
-            IloscSubstancjiCzynnej iloscTramadol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.ONE, tramadol);
+            IloscSubstancjiCzynnej iloscParacetamol2 = new IloscSubstancjiCzynnej(null, "g", BigDecimal.TEN, paracetamol, lekZaldiar);
+            IloscSubstancjiCzynnej iloscTramadol = new IloscSubstancjiCzynnej(null, "g", BigDecimal.ONE, tramadol, lekZaldiar);
             session.persist(iloscParacetamol2);
             session.persist(iloscTramadol);
 
             lekZaldiar .setIlosciSubstancjiCzynnej(List.of(iloscParacetamol2, iloscTramadol));
             lekZaldiar .setCzyWymagaRecepty(true);
             lekZaldiar .setIloscOpakowanWmagazynie(10);
-            session.persist(lekZaldiar);
 
+            session.persist(lekZaldiar);
             session.persist(lekApap);
 
 
